@@ -1,0 +1,42 @@
+name: Create Project Structure
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Create directories and files
+      run: |
+        mkdir -p app/src/main/java/com/example/greatsage
+        mkdir -p app/src/main/res/layout
+        mkdir -p app/src/main/res/values
+
+        touch settings.gradle
+        touch build.gradle
+        touch app/build.gradle
+        touch app/src/main/AndroidManifest.xml
+        touch app/src/main/java/com/example/greatsage/MainActivity.java
+        touch app/src/main/java/com/example/greatsage/BluetoothReceiver.java
+        touch app/src/main/java/com/example/greatsage/WifiReceiver.java
+        touch app/src/main/java/com/example/greatsage/LocationReceiver.java
+        touch app/src/main/java/com/example/greatsage/AutoStartReceiver.java
+        touch app/src/main/res/layout/activity_main.xml
+        touch app/src/main/res/values/strings.xml
+
+    - name: Commit changes
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git add .
+        git commit -m "Create initial project structure"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
